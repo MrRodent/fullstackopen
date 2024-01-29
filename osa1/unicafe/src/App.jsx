@@ -12,11 +12,17 @@ const Display = ({ text, value }) => {
   return <p>{text} {value}</p>
 }
 
+const PercentageDisplay = ({ text, value }) => {
+  return <p>{text} {value} %</p>
+}
+
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const all = good + neutral + bad;
 
   const setValue = (feedback) => {
     const handler = () => {
@@ -31,6 +37,21 @@ const App = () => {
     return handler
   }
 
+  const countAverage = () => {
+    if (all === 0) return 0;
+
+    const goodValue = good * 1;
+    const badValue = bad * -1;
+
+    return (goodValue + badValue) / all;
+  }
+
+  const countPositive = () => {
+    if (all === 0) return 0;
+
+    return good / all * 100;
+  }
+
   return (
     <div>
       <Header text={"give feedback"}></Header>
@@ -42,6 +63,9 @@ const App = () => {
       <Display text={"good"} value={good}></Display>
       <Display text={"neutral"} value={neutral}></Display>
       <Display text={"bad"} value={bad}></Display>
+      <Display text={"all"} value={all}></Display>
+      <Display text={"average"} value={countAverage()}></Display>
+      <PercentageDisplay text={"positive"} value={countPositive()}></PercentageDisplay>
     </div>
   )
 }
