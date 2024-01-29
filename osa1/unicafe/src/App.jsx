@@ -18,8 +18,6 @@ const PercentageDisplay = ({ text, value }) => {
 
 const Statistics = ({ values }) => {
   const countAverage = () => {
-    if (values.all === 0) return 0;
-
     const goodValue = values.goodTotal * 1;
     const badValue = values.badTotal * -1;
 
@@ -27,13 +25,20 @@ const Statistics = ({ values }) => {
   }
 
   const countPositive = () => {
-    if (values.all === 0) return 0;
-
     return values.goodTotal / values.all * 100;
   }
 
-  return (
-    <div>
+  if (values.all === 0) {
+    return (
+      <div>
+        <Header text={"statistics"}></Header>
+        <p>No feedback given</p>
+      </div>
+    )
+  } else {
+
+    return (
+      <div>
       <Header text={"statistics"}></Header>
       <Display text={"good"} value={values.goodTotal}></Display>
       <Display text={"neutral"} value={values.neutralTotal}></Display>
@@ -42,7 +47,8 @@ const Statistics = ({ values }) => {
       <Display text={"average"} value={countAverage()}></Display>
       <PercentageDisplay text={"positive"} value={countPositive()}></PercentageDisplay>
     </div>
-  )
+   )
+  }
 }
 
 const App = () => {
