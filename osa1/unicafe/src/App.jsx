@@ -16,13 +16,47 @@ const PercentageDisplay = ({ text, value }) => {
   return <p>{text} {value} %</p>
 }
 
+const Statistics = ({ values }) => {
+  const countAverage = () => {
+    if (values.all === 0) return 0;
+
+    const goodValue = values.goodTotal * 1;
+    const badValue = values.badTotal * -1;
+
+    return (goodValue + badValue) / values.all;
+  }
+
+  const countPositive = () => {
+    if (values.all === 0) return 0;
+
+    return values.goodTotal / values.all * 100;
+  }
+
+  return (
+    <div>
+      <Header text={"statistics"}></Header>
+      <Display text={"good"} value={values.goodTotal}></Display>
+      <Display text={"neutral"} value={values.neutralTotal}></Display>
+      <Display text={"bad"} value={values.badTotal}></Display>
+      <Display text={"all"} value={values.all}></Display>
+      <Display text={"average"} value={countAverage()}></Display>
+      <PercentageDisplay text={"positive"} value={countPositive()}></PercentageDisplay>
+    </div>
+  )
+}
 
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const all = good + neutral + bad;
+
+  const values = {
+    goodTotal: good,
+    neutralTotal: neutral,
+    badTotal: bad,
+    all: good + neutral + bad
+  }
 
   const setValue = (feedback) => {
     const handler = () => {
@@ -37,35 +71,13 @@ const App = () => {
     return handler
   }
 
-  const countAverage = () => {
-    if (all === 0) return 0;
-
-    const goodValue = good * 1;
-    const badValue = bad * -1;
-
-    return (goodValue + badValue) / all;
-  }
-
-  const countPositive = () => {
-    if (all === 0) return 0;
-
-    return good / all * 100;
-  }
-
   return (
     <div>
       <Header text={"give feedback"}></Header>
       <Button handleClick={setValue("good")} text="good"></Button>
       <Button handleClick={setValue("neutral")} text="neutral"></Button>
       <Button handleClick={setValue("bad")} text="bad"></Button>
-  
-      <Header text={"statistics"}></Header>
-      <Display text={"good"} value={good}></Display>
-      <Display text={"neutral"} value={neutral}></Display>
-      <Display text={"bad"} value={bad}></Display>
-      <Display text={"all"} value={all}></Display>
-      <Display text={"average"} value={countAverage()}></Display>
-      <PercentageDisplay text={"positive"} value={countPositive()}></PercentageDisplay>
+      <Statistics values={values}></Statistics>
     </div>
   )
 }
