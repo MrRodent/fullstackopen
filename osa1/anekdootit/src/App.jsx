@@ -1,8 +1,16 @@
 import { useState } from 'react'
 import './App.css'
 
+const Header = ({ text }) => {
+  return <h1>{text}</h1>
+}
+
 const Button = ({ handleClick, text }) => {
   return <button onClick={handleClick}>{text}</button>
+}
+
+const StatisticLine = ({ votes }) => {
+  return <p id="statistic">votes: {votes}</p>
 }
 
 const App = () => {
@@ -18,15 +26,29 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  // Array initialized with zeroes
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+
+  console.log(selected, votes);
 
   const randomAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length);
     setSelected(randomIndex);
   }
 
+  const vote = () => {
+    console.log("voted", selected);
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
+  }
+
   return (
     <div>
+      <Header text="Anecdote of the day"></Header>
       <p>{anecdotes[selected]}</p>
+      <StatisticLine votes={votes[selected]}></StatisticLine>
+      <Button handleClick={vote} text="Vote"></Button>
       <Button handleClick={randomAnecdote} text="Next"></Button>
     </div>
   )
