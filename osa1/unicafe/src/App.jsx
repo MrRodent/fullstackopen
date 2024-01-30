@@ -10,9 +10,19 @@ const Button = ({ handleClick, text }) => {
 
 const StatisticLine = ({ text, value }) => {
   if (text === "positive") {
-    return <p>{text} {value} %</p>
+    return (
+      <tr>
+      <td>{text}</td> 
+      <td>{value} %</td>
+    </tr>
+    )
   } else {
-    return <p>{text} {value}</p>
+    return (
+      <tr>
+        <td>{text}</td> 
+        <td>{value}</td>
+      </tr>
+    ) 
   }
 }
 
@@ -39,20 +49,23 @@ const Statistics = ({ values }) => {
 
     return (
       <div>
-      <Header text={"statistics"}></Header>
-      <StatisticLine text={"good"} value={values.goodTotal}></StatisticLine>
-      <StatisticLine text={"neutral"} value={values.neutralTotal}></StatisticLine>
-      <StatisticLine text={"bad"} value={values.badTotal}></StatisticLine>
-      <StatisticLine text={"all"} value={values.all}></StatisticLine>
-      <StatisticLine text={"average"} value={countAverage()}></StatisticLine>
-      <StatisticLine text={"positive"} value={countPositive()}></StatisticLine>
-    </div>
-   )
+        <Header text={"statistics"}></Header>
+        <table>
+          <tbody>
+          <StatisticLine text={"good"} value={values.goodTotal}></StatisticLine>
+          <StatisticLine text={"neutral"} value={values.neutralTotal}></StatisticLine>
+          <StatisticLine text={"bad"} value={values.badTotal}></StatisticLine>
+          <StatisticLine text={"all"} value={values.all}></StatisticLine>
+          <StatisticLine text={"average"} value={countAverage()}></StatisticLine>
+          <StatisticLine text={"positive"} value={countPositive()}></StatisticLine>
+          </tbody>
+        </table>
+      </div>
+    )
   }
 }
 
 const App = () => {
-  // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
