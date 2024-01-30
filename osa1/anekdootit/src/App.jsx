@@ -9,9 +9,35 @@ const Button = ({ handleClick, text }) => {
   return <button onClick={handleClick}>{text}</button>
 }
 
-const StatisticLine = ({ votes }) => {
-  return <p id="statistic">votes: {votes}</p>
+const AnecdoteDisplay = ({ anecdote, votes }) => {
+  return (
+    <>
+      <p>{anecdote}</p>
+      <p id="statistic">votes: {votes}</p>  
+    </>
+  )
 }
+
+const DailyAnecdote = ({ anecdote, votes }) => {
+  return (
+    <>
+      <Header text="Anecdote of the day"></Header>
+      <AnecdoteDisplay anecdote={anecdote} votes={votes}></AnecdoteDisplay>
+    </>
+  )
+}
+
+const MostVotedAnecdote = ({ anecdote, votes }) => {
+  if (votes === 0) return;
+  
+  return (
+    <>
+      <Header text="Anecdote with most votes"></Header>
+      <AnecdoteDisplay anecdote={anecdote} votes={votes}></AnecdoteDisplay>
+    </>
+  )
+}
+
 
 const App = () => {
   const anecdotes = [
@@ -29,27 +55,39 @@ const App = () => {
   // Array initialized with zeroes
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
-  console.log(selected, votes);
-
   const randomAnecdote = () => {
-    const randomIndex = Math.floor(Math.random() * anecdotes.length);
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * anecdotes.length);
+    } while (randomIndex === selected);
     setSelected(randomIndex);
   }
 
   const vote = () => {
-    console.log("voted", selected);
     const copy = [...votes];
     copy[selected] += 1;
     setVotes(copy);
   }
 
+  let mostVotes = 0;
+  const mostVotedAnecdote = () => {
+    // Find the one with most votes
+    votes.forEach(vote => {
+      if (vote > mostVotes) {
+        mostVotes = vote;
+      }
+    });
+
+    const index = votes.indexOf(mostVotes);
+    return anecdotes[index];
+  }
+
   return (
     <div>
-      <Header text="Anecdote of the day"></Header>
-      <p>{anecdotes[selected]}</p>
-      <StatisticLine votes={votes[selected]}></StatisticLine>
+      <DailyAnecdote anecdote={anecdotes[selected]} votes={votes[selected]}></DailyAnecdote>
       <Button handleClick={vote} text="Vote"></Button>
       <Button handleClick={randomAnecdote} text="Next"></Button>
+      <MostVotedAnecdote anecdote={mostVotedAnecdote()} votes={mostVotes}></MostVotedAnecdote>
     </div>
   )
 }
