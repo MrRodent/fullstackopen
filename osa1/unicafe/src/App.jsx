@@ -8,12 +8,12 @@ const Button = ({ handleClick, text }) => {
   return <button onClick={handleClick}>{text}</button>
 }
 
-const Display = ({ text, value }) => {
-  return <p>{text} {value}</p>
-}
-
-const PercentageDisplay = ({ text, value }) => {
-  return <p>{text} {value} %</p>
+const StatisticLine = ({ text, value }) => {
+  if (text === "positive") {
+    return <p>{text} {value} %</p>
+  } else {
+    return <p>{text} {value}</p>
+  }
 }
 
 const Statistics = ({ values }) => {
@@ -40,12 +40,12 @@ const Statistics = ({ values }) => {
     return (
       <div>
       <Header text={"statistics"}></Header>
-      <Display text={"good"} value={values.goodTotal}></Display>
-      <Display text={"neutral"} value={values.neutralTotal}></Display>
-      <Display text={"bad"} value={values.badTotal}></Display>
-      <Display text={"all"} value={values.all}></Display>
-      <Display text={"average"} value={countAverage()}></Display>
-      <PercentageDisplay text={"positive"} value={countPositive()}></PercentageDisplay>
+      <StatisticLine text={"good"} value={values.goodTotal}></StatisticLine>
+      <StatisticLine text={"neutral"} value={values.neutralTotal}></StatisticLine>
+      <StatisticLine text={"bad"} value={values.badTotal}></StatisticLine>
+      <StatisticLine text={"all"} value={values.all}></StatisticLine>
+      <StatisticLine text={"average"} value={countAverage()}></StatisticLine>
+      <StatisticLine text={"positive"} value={countPositive()}></StatisticLine>
     </div>
    )
   }
