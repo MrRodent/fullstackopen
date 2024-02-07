@@ -1,68 +1,45 @@
 import { useState } from 'react'
-import Number from './components/Number'
+import PersonsDisplay from './components/PersonsDisplay'
+import NewPersonForm from './components/NewPersonForm'
+import Header from './components/Header'
+import FilterByName from './components/FilterByName'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-7654321'}
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-
-  const addPerson = (event) => {
-    event.preventDefault();
-
-    // Tarkista onko nimi jo luettelossa
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
-    }
-    
-    const personObject = {
-      name: newName,
-      number: newNumber
-    }
-
-    setPersons(persons.concat(personObject))
-  }
-
-  const handleNameChange = (event) => {
-    setNewName(event.target.value)
-  }
-  
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-  }
+  const [filter, setFilter] = useState('')
+  const [showAll, setShowAll] = useState(true)
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: 
-          <input 
-            value={newName} 
-            onChange={handleNameChange}
-            placeholder='John Doe'
-          />
-        </div>
-        <div>
-          number:
-          <input 
-            value={newNumber}
-            onChange={handleNumberChange}
-            placeholder='040-1234567'
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {persons.map(person => 
-          <Number key={person.name} person={person} />
-          )}
-      </ul>
+      <Header content='Phonebook'/>
+      <FilterByName 
+        persons={persons}
+        filter={filter}
+        setFilter={setFilter}
+        setShowAll={setShowAll}
+      />
+      <Header content='Add a contact'/>
+      <NewPersonForm 
+        persons={persons} 
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+        setPersons={setPersons}
+      />
+      <Header content='Numbers'/>
+      <PersonsDisplay 
+        persons={persons}
+        filter={filter}
+        showAll={showAll}
+      />
     </div>
   )
 
