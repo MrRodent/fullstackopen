@@ -3,12 +3,20 @@ import Number from './components/Number'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas' },
+    { name: 'Pekka Hellas' }
   ]) 
   const [newName, setNewName] = useState('')
 
   const addPerson = (event) => {
     event.preventDefault();
+
+    // Tarkista onko nimi jo luettelossa
+    if (persons.some(person => person.name === newName)) {
+      alert(`${newName} is already added to phonebook`);
+      return;
+    }
+    
     const personObject = {
       name: newName
     }
