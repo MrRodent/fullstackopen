@@ -3,8 +3,7 @@
     {
       "id": "1",
       "content": "HTML is easy",
-      "important": true,
-      "imporant": false
+      "important": true
     },
     {
       "id": "2",
@@ -17,41 +16,14 @@
       "important": true
     },
     {
-      "id": "cd8a",
-      "content": "asd",
+      "id": "e96a",
+      "content": "Testaillaan",
+      "important": false
+    },
+    {
+      "id": "92dd",
+      "content": "Kokeillaan",
       "important": true
-    },
-    {
-      "id": "1125",
-      "content": "Wadwasd",
-      "important": true,
-      "imporant": false
-    },
-    {
-      "id": "7912",
-      "content": "Testiposti",
-      "important": true
-    },
-    {
-      "id": "14fc",
-      "content": "Toinen testiposti",
-      "important": false
-    },
-    {
-      "id": "d375",
-      "content": "Kolmas posti",
-      "important": false
-    },
-    {
-      "id": "d61a",
-      "content": "Onko tässä nyt uniikki key",
-      "important": true,
-      "imporant": false
-    },
-    {
-      "id": "ff4a",
-      "content": "Olihan siinä",
-      "important": false
     }
   ]
 }
