@@ -2,20 +2,27 @@ import contactService from '../services/contacts'
 
 const NewPersonForm = (props) => {
   // Dekonstruktointi
-  const {persons, newName, setNewName, newNumber, setNewNumber, setPersons} = props
+  const {persons, newName, setNewName, newNumber, setNewNumber, setPersons, refreshContacts} = props
 
   const addPerson = (event) => {
     event.preventDefault();
 
-    // Tarkista onko nimi jo luettelossa
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      return;
-    }
-    
     const personObject = {
       name: newName,
       number: newNumber
+    }
+
+    // Tarkista onko nimi jo luettelossa
+    if (persons.some(person => person.name === newName)) {
+      if (window.confirm(`Do you want to update the number of ${newName}?`)) {
+        let person = persons.find(person => person.name === newName)
+        contactService
+          .update(person.id, personObject)
+          .then(() => {
+            refreshContacts()
+          })
+        return;
+      }
     }
 
     contactService

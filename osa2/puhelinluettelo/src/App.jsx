@@ -12,6 +12,7 @@ const App = () => {
   const [filter, setFilter] = useState('')
   const [showAll, setShowAll] = useState(true)
 
+  // Hakee palvelimella olevat numerot
   const refreshContacts = () => {
     contactService
     .getAll()
@@ -24,7 +25,6 @@ const App = () => {
   }
 
   // useEffect hookki
-  // Hakee palvelimella olevat numerot
   useEffect(() => {
     refreshContacts()
   }, [])
@@ -46,6 +46,7 @@ const App = () => {
         newNumber={newNumber}
         setNewNumber={setNewNumber}
         setPersons={setPersons}
+        refreshContacts={refreshContacts}
       />
       <Header content='Numbers'/>
       <PersonsDisplay 
