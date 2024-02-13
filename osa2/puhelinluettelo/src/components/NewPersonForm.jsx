@@ -1,3 +1,5 @@
+import contactService from '../services/contacts'
+
 const NewPersonForm = (props) => {
   // Dekonstruktointi
   const {persons, newName, setNewName, newNumber, setNewNumber, setPersons} = props
@@ -16,11 +18,14 @@ const NewPersonForm = (props) => {
       number: newNumber
     }
 
-    setPersons(persons.concat(personObject))
-
-    // Tyhjennä kentät
-    setNewName('')
-    setNewNumber('')
+    contactService
+      .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+    
   }
 
   const handleNameChange = (event) => {

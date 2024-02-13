@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import PersonsDisplay from './components/PersonsDisplay'
 import NewPersonForm from './components/NewPersonForm'
 import Header from './components/Header'
 import FilterByName from './components/FilterByName'
+import contactService from './services/contacts'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -13,12 +13,12 @@ const App = () => {
   const [showAll, setShowAll] = useState(true)
 
   // useEffect hookki
+  // Hakee palvelimella olevat numerot
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    contactService
+      .getAll()
+      .then(initialContacts => {
+        setPersons(initialContacts)
       })
   }, [])
 
