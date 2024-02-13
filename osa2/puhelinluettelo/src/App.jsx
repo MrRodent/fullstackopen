@@ -12,14 +12,21 @@ const App = () => {
   const [filter, setFilter] = useState('')
   const [showAll, setShowAll] = useState(true)
 
+  const refreshContacts = () => {
+    contactService
+    .getAll()
+    .then(contactList => {
+      setPersons(contactList)
+    })
+    .catch(err => {
+      console.log('Failed to refresh contacts')
+    })
+  }
+
   // useEffect hookki
   // Hakee palvelimella olevat numerot
   useEffect(() => {
-    contactService
-      .getAll()
-      .then(initialContacts => {
-        setPersons(initialContacts)
-      })
+    refreshContacts()
   }, [])
 
   return (
@@ -45,6 +52,7 @@ const App = () => {
         persons={persons}
         filter={filter}
         showAll={showAll}
+        refreshContacts={refreshContacts}
       />
     </div>
   )
