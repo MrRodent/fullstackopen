@@ -38,7 +38,9 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 0.4em 1em;
+  margin-left: 0.5rem;
+  margin-top: 0.3rem;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -53,6 +55,35 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+input {
+  margin-left: 0.5rem;
+}
+
+li {
+  list-style-type: none;
+  text-align: start;
+  padding-bottom: 1em;
+}
+
+.notification {
+  border: solid;
+  border-radius: 0.7rem;
+  padding: 0.8rem;
+}
+
+.error {
+  color: crimson;
+  background-color: pink;
+  border-color: crimson;
+}
+
+.success {
+  color: green;
+  background-color: lightgreen;
+  border-color: green;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {

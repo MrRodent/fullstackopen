@@ -2,7 +2,7 @@ import contactService from '../services/contacts'
 
 const NewPersonForm = (props) => {
   // Dekonstruktointi
-  const {persons, newName, setNewName, newNumber, setNewNumber, setPersons, refreshContacts} = props
+  const {persons, newName, setNewName, newNumber, setNewNumber, setPersons, refreshContacts, setNotificationMsg} = props
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -31,6 +31,10 @@ const NewPersonForm = (props) => {
           setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotificationMsg(`Added ${returnedPerson.name} to contacts`)
+          setTimeout(() => {
+            setNotificationMsg(null)
+          }, 5000);
         })
     
   }
@@ -46,7 +50,7 @@ const NewPersonForm = (props) => {
   return ( 
     <form onSubmit={addPerson}>
         <div>
-          name: 
+          name:
           <input 
             value={newName} 
             onChange={handleNameChange}

@@ -1,6 +1,6 @@
 import Number from "./Number"
 
-const PersonsDisplay = ({ persons, filter, showAll, refreshContacts }) => {
+const PersonsDisplay = ({ persons, filter, showAll, refreshContacts, setPersons, setNotificationMsg, setIsErrorMsg }) => {
   const personsToShow = showAll
   ? persons
   : persons.filter(person => person.name.toLowerCase().includes(filter))
@@ -11,7 +11,11 @@ const PersonsDisplay = ({ persons, filter, showAll, refreshContacts }) => {
       <Number 
         key={person.name} 
         person={person} 
-        refreshContacts={refreshContacts} 
+        refreshContacts={refreshContacts}
+        persons={persons}
+        setPersons={setPersons}
+        setNotificationMsg={setNotificationMsg}
+        setIsErrorMsg={setIsErrorMsg}
       />
       )}
   </ul>

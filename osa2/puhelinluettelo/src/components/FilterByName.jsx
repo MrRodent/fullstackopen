@@ -14,6 +14,7 @@ const FilterByName = ({ filter, setFilter, setShowAll }) => {
   return (
     <div>
       filter shown with
+      <br />
       <input
         value={filter}
         onChange={handleInputChange}

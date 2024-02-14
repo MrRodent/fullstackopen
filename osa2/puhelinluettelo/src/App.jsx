@@ -4,6 +4,7 @@ import NewPersonForm from './components/NewPersonForm'
 import Header from './components/Header'
 import FilterByName from './components/FilterByName'
 import contactService from './services/contacts'
+import './App.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,6 +12,22 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [notificationMsg, setNotificationMsg] = useState(null)
+  const [isErrorMsg, setIsErrorMsg] = useState(false)
+
+  const Notification = ({ message }) => {
+    if (message) {
+      let type = 'success'
+      if (isErrorMsg) {
+        type = 'error'
+      }
+      return (
+        <div className={`notification ${type}`}>
+          {notificationMsg}
+        </div>
+      )
+    }
+  }
 
   // Hakee palvelimella olevat numerot
   const refreshContacts = () => {
@@ -47,13 +64,18 @@ const App = () => {
         setNewNumber={setNewNumber}
         setPersons={setPersons}
         refreshContacts={refreshContacts}
+        setNotificationMsg={setNotificationMsg}
       />
       <Header content='Numbers'/>
+      <Notification message={notificationMsg} />
       <PersonsDisplay 
         persons={persons}
         filter={filter}
         showAll={showAll}
         refreshContacts={refreshContacts}
+        setPersons={setPersons}
+        setNotificationMsg={setNotificationMsg}
+        setIsErrorMsg={setIsErrorMsg}
       />
     </div>
   )
