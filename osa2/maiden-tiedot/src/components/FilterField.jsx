@@ -2,8 +2,6 @@ const FilterField = ({ filter, setFilter, filteredList, setFilteredList, countri
   const handleInputChange = (event) => {
     const value = event.target.value
     setFilter(value)
-    const filtered = countries.filter(country => country.toLowerCase().includes(filter.toLowerCase()))
-    setFilteredList(filtered)
   }
 
   return (
