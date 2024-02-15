@@ -1,26 +1,40 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import FilterField from './components/FilterField'
-import CountryService from './services/countries'
+import countryService from './services/countries'
+
+const Countries = ({ filter, filteredList }) => {
+  if (filter === '') {
+    return <p>Search for a country</p>
+  }
+
+  if (filteredList.length > 10) {
+    return <p>Too many matches, specify another filter</p>
+  }
+
+  return (
+    <ul>
+      {filteredList.map(country =>
+        <li key={country}>{country}</li>
+      )}
+    </ul>
+  )
+}
 
 function App() {
   const [filter, setFilter] = useState('')
-  const [countries, setCountries] = useState(['Espanja', 'Suomi'])
+  const [filteredList, setFilteredList] = useState([])
+  const [countries, setCountries] = useState([])
 
-  // TODO: jos filtterin ehdon täyttäviä maita > 10, tarkennuskehote
-  // jos <= 10, näytetään hakuehdon täyttävät maat
-  // kun enää 1, näytetään perustiedot, lippu sekä puhutut kielet
-
-  // Testimappaus
-  const Countries = () => {
-    return (
-      <ul>
-        {countries.map(country =>
-          <li key={country}>{country}</li>
-        )}
-      </ul>
-    )
-  }
+  useEffect(() => {
+    countryService
+    .getAll()
+    .then(countryData => {
+      const countryNames = countryData.map(country => country.name.common)
+      setCountries(countryNames)
+    })
+    .catch(err => console.log('Failed to fetch country names'))
+  }, [])
 
   return (
     <>
@@ -28,8 +42,15 @@ function App() {
       <FilterField
         filter={filter}
         setFilter={setFilter}
+        filteredList={filteredList}
+        setFilteredList={setFilteredList}
+        countries={countries}
       />
-      <Countries />
+      <Countries 
+        filter={filter}
+        countries={countries}
+        filteredList={filteredList}
+      />
     </>
   )
 }
