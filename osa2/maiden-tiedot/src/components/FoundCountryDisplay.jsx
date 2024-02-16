@@ -19,7 +19,7 @@ const FoundCountryDisplay = ({ foundCountry }) => {
         <h2>{foundCountry.name.common}</h2>
         <div>Capital: <strong>{foundCountry.capital}</strong></div>
         <div>Area: <strong>{foundCountry.area}</strong> km²</div>
-        <img src={foundCountry.flags.png} alt={foundCountry.flags.png} />
+        <img src={foundCountry.flags.png} alt={foundCountry.flags.png} width='90%' />
         <div>Continent: <strong>{continentString}</strong></div>
         <div>Languages: <strong>{languageString}</strong></div>
       </div>

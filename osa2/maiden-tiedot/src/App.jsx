@@ -40,9 +40,11 @@ function App() {
         filteredList={filteredList}
         setFilteredList={setFilteredList}
         countries={countries}
+        foundCountry={foundCountry}
       />
       <CountryList 
         filter={filter}
+        setFilter={setFilter}
         countries={countries}
         filteredList={filteredList}
         foundCountry={foundCountry}
