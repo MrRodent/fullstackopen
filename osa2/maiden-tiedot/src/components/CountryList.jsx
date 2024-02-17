@@ -6,7 +6,7 @@ const fetchCountry = (country, setFoundCountry) => {
     .then(countryData => {
       setFoundCountry(countryData)
     })
-    .catch(err => console.log('Failed to fetch the country'))
+    .catch(err => console.error('Failed to fetch the country'))
 }
 
 const ShowButton = ({ country, setFoundCountry }) => {
