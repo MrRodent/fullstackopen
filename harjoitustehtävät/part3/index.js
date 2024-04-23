@@ -1,5 +1,8 @@
 const express = require('express')
+const cors = require('cors')
+
 const app = express()
+app.use(cors())
 
 let notes = [  
   {    
@@ -16,6 +19,11 @@ let notes = [
     id: 3,    
     content: "GET and POST are the most important methods of HTTP protocol",    
     important: true  
+  },
+  {    
+    id: 4,    
+    content: "Testinote",    
+    important: false  
   }
 ]
 
@@ -45,6 +53,6 @@ app.delete('/api/notes/:id', (request, response) => {
   response.status(204).end()
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT)
 console.log(`Server running on ${PORT}`)
