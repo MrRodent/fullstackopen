@@ -19,7 +19,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
-  } else if (error.name === 'ValidationError') {
+  }
+  else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   }
 
@@ -37,15 +38,17 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>')
+  response.send('<h1>Hello world</h1>')
 })
 
+// Hae kaikki
 app.get('/api/notes', (request, response) => {
   Note.find({}).then(notes => {
     response.json(notes)
   })
 })
 
+// Luo uusi
 app.post('/api/notes', (request, response, next) => {
   const body = request.body
 
@@ -59,6 +62,7 @@ app.post('/api/notes', (request, response, next) => {
   }).catch(error => next(error))
 })
 
+// Hae yksittäinen
 app.get('/api/notes/:id', (request, response, next) => {
   Note.findById(request.params.id)
     .then(note => {
@@ -71,6 +75,7 @@ app.get('/api/notes/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
+// Poisto
 app.delete('/api/notes/:id', (request, response, next) => {
   Note.findByIdAndDelete(request.params.id)
     .then(result => {
@@ -79,14 +84,16 @@ app.delete('/api/notes/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
+// Päivitys (make important)
+// Mahdollistaa myös sisällön editoinnin
 app.put('/api/notes/:id', (request, response, next) => {
   const { content, important } = request.body
 
   Note.findByIdAndUpdate(
-    request.params.id, 
+    request.params.id,
     { content, important },
     { new: true, runValidators: true, context: 'query' }
-  ) 
+  )
     .then(updatedNote => {
       response.json(updatedNote)
     })
@@ -97,6 +104,6 @@ app.use(unknownEndpoint)
 app.use(errorHandler)
 
 const PORT = process.env.PORT
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+app.listen(PORT), () => {
+  console.log(`Server running on ${PORT}`)
+}
