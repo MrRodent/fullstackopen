@@ -1,4 +1,3 @@
-// TODO: ei vielä käytössä
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 
@@ -19,3 +18,5 @@ blogsRouter.post('/', (request, response) => {
       response.status(201).json(result)
     })
 })
+
+module.exports = blogsRouter
