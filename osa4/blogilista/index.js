@@ -1,22 +1,7 @@
+const app = require('./app')
 const config = require('./utils/config')
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const mongoose = require('mongoose')
 
 const Blog = require('./models/blog')
-
-
-mongoose.connect(config.MONGODB_URI)
-  .then(() => {
-    console.log('connected to MongoDB');
-  })
-  .catch((error) => {
-    console.log('error connecting to MongoDB:', error.message); 
-  })
-
-app.use(cors())
-app.use(express.json())
 
 app.get('/api/blogs', (request, response) => {
   Blog
