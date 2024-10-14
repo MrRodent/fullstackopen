@@ -1,3 +1,5 @@
+const blog = require("../models/blog");
+
 const dummy = (blogs) => {
   return 1
 }
@@ -28,6 +30,7 @@ const favouriteBlog = (blogs) => {
   );
 }
 
+
 const mostBlogs = (blogs) => {
   const authorCounts = blogs.reduce((counts, { author }) => {
     counts[author] = (counts[author] || 0) + 1
@@ -43,6 +46,24 @@ const mostBlogs = (blogs) => {
   return { author: authorWithMostBlogs[0], blogs: authorWithMostBlogs[1] }
 }
 
+const mostLikes = (blogs) => {
+  const authorList = blogs.reduce((list, { author, likes: likeCount }) => {
+    const found = list.find(({ author: foundAuthor }) => foundAuthor === author)
+    if (!found) {
+      list.push({ author, likes: likeCount })
+    } else {
+      found.likes += likeCount
+    }
+    return list
+  }, [])
+
+  const authorWithMostLikes = authorList.reduce(
+    (biggest, current) => (current.likes > biggest.likes ? current : biggest),
+    { likes: 0 }
+  )
+
+  return authorWithMostLikes
+}
 module.exports = {
-  dummy, totalLikes, favouriteBlog, mostBlogs
+  dummy, totalLikes, favouriteBlog, mostBlogs, mostLikes
 }
